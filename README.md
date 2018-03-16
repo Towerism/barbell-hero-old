@@ -1,4 +1,4 @@
-# barbell-hero [![Build Status](https://travis-ci.org/Towerism/barbell-hero.svg?branch=master)](https://travis-ci.org/Towerism/barbell-hero)
+# barbell-hero [![Build Status](https://travis-ci.org/Towerism/barbell-hero.svg?branch=master)](https://travis-ci.org/Towerism/barbell-hero) [![Deploy Status](https://heroku-badge.herokuapp.com/?app=barbell-hero)](https://barbell-hero.herokuapp.com)
 
 > Progressive Web App (PWA) dedicated to strength programming
 
