@@ -4,6 +4,9 @@ node_modules
 # logs
 *.log
 
+# backpack build
+/build
+
 # Nuxt build
 .nuxt
 
