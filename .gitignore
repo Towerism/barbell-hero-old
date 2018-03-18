@@ -24,3 +24,4 @@ dist
 static/manifest*.json
 static/sw.js
 static/workbox-sw*.js
+*.sqlite
