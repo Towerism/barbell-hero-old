@@ -1,9 +1,18 @@
+let migrations = {
+  directory: 'server/db/migrations'
+}
+let seeds = {
+  directory: 'server/db/seeds'
+}
+
 export default {
   development: {
     client: 'sqlite3',
     connection: {
       filename: './db.sqlite'
     },
+    migrations,
+    seeds,
     useNullAsDefault: true
   },
   test: {
@@ -11,6 +20,8 @@ export default {
     connection: {
       filename: './testdb.sqlite'
     },
+    migrations,
+    seeds,
     useNullAsDefault: true
   },
   production: {
@@ -21,6 +32,8 @@ export default {
       password: process.env.DATABASE_PASSWORD,
       database: process.env.DATABASE_NAME
     },
+    migrations,
+    seeds,
     useNullAsDefault: true
   }
 }

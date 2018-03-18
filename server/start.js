@@ -6,7 +6,7 @@ import middleware from './middleware'
 export default async function start (_host, _port, options) {
   const app = new Koa()
   const host = _host || process.env.HOST || '127.0.0.1'
-  const port = _port || process.env.PORT || 3000
+  const port = _port != null ? _port : process.env.PORT || 3000
 
   options = Object.assign({
     nuxtBuild: false,
