@@ -1,11 +1,13 @@
 import { test } from 'ava'
 import start from '../server/start'
 import { resolve } from 'path'
-import { migrate, rollback, seed } from '../server/db'
+import { migrate, rollback, seed, drop } from '../server/db'
 
-export function ensureServerIsStartedFresh () {
+export function harness (defineTests) {
   test.before('Init server', startServer)
   test.beforeEach('Reset database', resetDatabase)
+  defineTests()
+  test.after.always('Kill database', drop)
 }
 
 async function startServer (t) {

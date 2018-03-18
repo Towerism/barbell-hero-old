@@ -17,6 +17,7 @@
     "bookshelf": "^0.12.1",
     "bookshelf-secure-password": "^3.0.1",
     "cross-env": "^5.1.4",
+    "del": "^3.0.0",
     "knex": "^0.14.4",
     "koa": "^2.5.0",
     "koa-bodyparser": "^4.2.0",
@@ -24,7 +25,9 @@
     "koa-rest-router": "^1.0.1",
     "nodemon": "^1.17.2",
     "nuxt": "^1.4.0",
-    "pg": "^7.4.1"
+    "pg": "^7.4.1",
+    "shortid": "^2.2.8",
+    "supertest": "^3.0.0"
   },
   "scripts": {
     "dev": "nodemon server/index.js --exec babel-node --presets @babel/es2015,@babel/stage-0",

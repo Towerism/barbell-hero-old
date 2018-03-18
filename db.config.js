@@ -18,7 +18,7 @@ export default {
   test: {
     client: 'sqlite3',
     connection: {
-      filename: './testdb.sqlite'
+      filename: `./testdb_${require('shortid').generate()}.sqlite`
     },
     migrations,
     seeds,

@@ -42,9 +42,9 @@ export default async function start (_host, _port, options) {
     })
   })
 
-  let listener = app.listen(port, host, () => {
-    process.env.PORT = listener.address().port
+  let server = app.listen(port, host, () => {
+    process.env.PORT = server.address().port
     console.log(`Server listening on ${host}:${process.env.PORT}`)
   })
-  return { nuxt }
+  return { nuxt, server }
 }
