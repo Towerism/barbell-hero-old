@@ -9,7 +9,7 @@ export function ensureServerIsStartedFresh () {
 }
 
 async function startServer (t) {
-  t.context = await start('localhost', 4000, {
+  t.context = await start('localhost', 0, {
     rootDir: resolve(__dirname, '..')
   })
 }

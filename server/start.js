@@ -13,10 +13,10 @@ export default async function start (_host, _port, options) {
     rootDir: resolve(__dirname, '..')
   }, options)
 
-  let config = require('../nuxt.config.js')
-
-  config.dev = !(app.env === 'production')
-  config.rootDir = options.rootDir
+  let config = Object.assign(require('../nuxt.config.js'), {
+    dev: !(app.env === 'production'),
+    rootDir: options.rootDir
+  })
 
   const nuxt = new Nuxt(config)
 
@@ -42,8 +42,9 @@ export default async function start (_host, _port, options) {
     })
   })
 
-  app.listen(port, host, () => {
-    console.log(`Server listening on ${host}:${port}`)
+  let listener = app.listen(port, host, () => {
+    process.env.PORT = listener.address().port
+    console.log(`Server listening on ${host}:${process.env.PORT}`)
   })
   return { nuxt }
 }
