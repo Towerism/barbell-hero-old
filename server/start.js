@@ -3,7 +3,7 @@ import { Nuxt, Builder } from 'nuxt'
 import { resolve } from 'path'
 import dbConfig from '../db.config'
 import Router from 'koa-rest-router'
-import mount from 'koa-mount'
+import bodyParser from 'koa-bodyparser'
 
 export default async function start (_host, _port, options) {
   const app = new Koa()
@@ -40,25 +40,26 @@ export default async function start (_host, _port, options) {
     hasSecurePassword: true
   })
 
-  let api = Router()
+  app.use(bodyParser())
+
+  let api = Router({ prefix: 'api' })
   api.resource('users', {
     async show (ctx, next) {
       let user = await User.where({ id: ctx.params.user }).fetch()
       ctx.body = user
+    },
+    async create (ctx, next) {
+      ctx.body = ctx.request.body
     }
   })
 
-  app.use(mount('/api', async (ctx, next) => {
-    let middleware = api.middleware()
-    // prevent api routes from invoking the next middleware
-    await middleware(ctx, () => {})
-    // if api route did not exist, invoke the next middleware
-    if (ctx.route == null) {
-      await next()
-    }
-  }))
+  app.use(api.middleware())
 
   app.use(async (ctx) => {
+    if (ctx.request.url.match(/^\/api/) != null) {
+      // nuxt doesn't have to route since the api already did
+      return
+    }
     ctx.status = 200
     return new Promise((resolve, reject) => {
       ctx.res.on('close', resolve)
