@@ -6,11 +6,19 @@
   "private": true,
   "dependencies": {
     "@nuxtjs/pwa": "^2.0.8",
+    "babel-cli": "^6.26.0",
     "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
     "backpack-core": "^0.7.0",
+    "bookshelf": "^0.12.1",
+    "bookshelf-secure-password": "^3.0.1",
     "cross-env": "^5.1.4",
+    "knex": "^0.14.4",
     "koa": "^2.5.0",
-    "nuxt": "^1.4.0"
+    "koa-mount": "^3.0.0",
+    "koa-rest-router": "^1.0.1",
+    "nuxt": "^1.4.0",
+    "pg": "^7.4.1"
   },
   "scripts": {
     "dev": "backpack dev",
@@ -18,8 +26,10 @@
     "start": "cross-env NODE_END=production node build/main.js",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
     "precommit": "npm run lint",
-    "heroku-postbuild": "yarn build",
-    "test": "ava"
+    "test": "ava",
+    "db:migrate:make": "yarn knex migrate:make",
+    "db:migrate:latest": "yarn knex migrate:latest",
+    "heroku-postbuild": "yarn build"
   },
   "devDependencies": {
     "ava": "^0.25.0",
@@ -30,7 +40,8 @@
     "eslint-plugin-html": "^2.0.0",
     "eslint-plugin-promise": "^3.4.1",
     "eslint-plugin-standard": "^2.0.1",
-    "jsdom": "^11.6.2"
+    "jsdom": "^11.6.2",
+    "sqlite3": "^4.0.0"
   },
   "engines": {
     "node": "^9.8.0",
@@ -43,7 +54,8 @@
   },
   "babel": {
     "presets": [
-      "es2015"
+      "es2015",
+      "stage-0"
     ]
   }
 }
