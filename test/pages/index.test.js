@@ -1,17 +1,10 @@
 import test from 'ava'
-import start from '../../server/start'
-import { resolve } from 'path'
+import { before, nuxt } from '../harness'
 
-let nuxt = null
-test.before('Init Nuxt.js', async t => {
-  let context = await start('localhost', 4000, {
-    rootDir: resolve(__dirname, '../..')
-  })
-  nuxt = context.nuxt
-})
+test.before('Init Nuxt.js', before)
 
 test('Route / exits without an error', async t => {
   let context = {}
-  const { html, error } = await nuxt.renderRoute('/', context)
+  const { html, error } = await nuxt().renderRoute('/', context)
   t.true(html && error == null)
 })
