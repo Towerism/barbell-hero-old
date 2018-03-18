@@ -1,8 +1,7 @@
 import dbConfig from '../../db.config'
 
 export default function middleware (app) {
-  const NODE_ENV = 'development' || process.env.NODE_ENV
-
+  const NODE_ENV = process.env.NODE_ENV || 'development'
   let knex = require('knex')(
     dbConfig[NODE_ENV]
   )
