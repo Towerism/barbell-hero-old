@@ -3,7 +3,7 @@ import { harness } from '../harness'
 
 harness(() => {
   test('Route / exits without an error', async t => {
-    const { html, error } = await t.context.nuxt.renderRoute('/', {})
-    t.true(html && error == null)
+    const res = await t.context.api.get('/')
+    t.is(res.status, 200)
   })
 })

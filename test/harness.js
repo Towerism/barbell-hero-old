@@ -20,7 +20,7 @@ export function harness (defineTests) {
 }
 
 function initRequest (t) {
-  t.context.request = request(t)
+  t.context.api = request(t)
 }
 
 async function startServer (t) {
