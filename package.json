@@ -19,6 +19,7 @@
     "bookshelf-secure-password": "^3.0.1",
     "cross-env": "^5.1.4",
     "del": "^3.0.0",
+    "jsonwebtoken": "^8.2.0",
     "knex": "^0.14.4",
     "knex-cli": "^1.0.2",
     "koa": "^2.5.0",
@@ -29,6 +30,7 @@
     "nuxt": "^1.4.0",
     "pg": "^7.4.1",
     "shortid": "^2.2.8",
+    "snazzy": "^7.1.1",
     "supertest": "^3.0.0"
   },
   "scripts": {
