@@ -10,4 +10,14 @@ harness(() => {
     t.is(res.status, 200)
     t.is(res.body.username, 'admin')
   })
+
+  test('POST api/users', async t => {
+    const res = await request(t.context.server)
+      .post('/api/users')
+      .field('username', 'myuser')
+      .field('password', 'mypassword')
+    t.is(res.status, 200)
+    t.is(res.body.username, 'myuser')
+    t.is(res.body.password_digest, 'asdf')
+  })
 })

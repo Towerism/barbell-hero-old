@@ -1,12 +1,19 @@
 import { test } from 'ava'
 import start from '../server/start'
 import { resolve } from 'path'
-import { migrate, rollback, seed, drop } from '../server/db'
+import { migrate, seed, rollback, drop } from '../server/db'
+import Mutex from 'await-mutex'
+
+let mutex = new Mutex()
+let unlock
 
 export function harness (defineTests) {
   test.before('Init server', startServer)
-  test.beforeEach('Reset database', resetDatabase)
+  test.beforeEach('Init database', initDatabase)
+
   defineTests()
+
+  test.afterEach.always('Rollback database', rollbackDatabase)
   test.after.always('Kill database', drop)
 }
 
@@ -16,8 +23,13 @@ async function startServer (t) {
   })
 }
 
-async function resetDatabase (t) {
-  await rollback()
+async function initDatabase (t) {
+  unlock = await mutex.lock()
   await migrate()
   await seed()
+}
+
+async function rollbackDatabase (t) {
+  await rollback()
+  unlock()
 }

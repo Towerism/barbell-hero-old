@@ -2,7 +2,7 @@ import { models } from '../db'
 
 export default function middleware (app) {
   app.use(async (ctx, next) => {
-    addModel('user', models.User, ctx)
+    addModel('User', models.User, ctx)
     await next()
   })
 }

@@ -3,14 +3,20 @@ import del from 'del'
 import { resolve, join } from 'path'
 
 export async function migrate () {
-  await knex.migrate.latest()
+  console.log(`${process.pid}: migrating database`)
+  let currentVersion = await knex.migrate.currentVersion()
+  if (currentVersion === 'none') {
+    await knex.migrate.latest()
+  }
 }
 
 export async function rollback () {
+  console.log(`${process.pid}: rolling back database`)
   await knex.migrate.rollback()
 }
 
 export async function seed () {
+  console.log(`${process.pid}: seeding database`)
   await knex.seed.run()
 }
 
