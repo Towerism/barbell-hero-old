@@ -1,4 +1,4 @@
-import dbConfig from '../../db.config'
+import dbConfig from './config'
 
 const NODE_ENV = process.env.NODE_ENV || 'development'
 let knex = Object.assign(require('knex')(
