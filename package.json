@@ -36,7 +36,6 @@
     "build": "nuxt build && babel server -d build",
     "start": "cross-env NODE_ENV=production node build/index.js",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
-    "precommit": "npm run lint",
     "test": "ava",
     "db:migrate:make": "yarn knex migrate:make",
     "db:migrate:latest": "yarn knex migrate:latest",
@@ -52,7 +51,11 @@
     "eslint-plugin-promise": "^3.4.1",
     "eslint-plugin-standard": "^2.0.1",
     "jsdom": "^11.6.2",
+    "pre-commit": "^1.2.2",
     "sqlite3": "^4.0.0"
+  },
+  "precommit": {
+    "run": "lint, test"
   },
   "engines": {
     "node": "^9.8.0",
