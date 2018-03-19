@@ -18,7 +18,7 @@ export default {
   test: {
     client: 'sqlite3',
     connection: {
-      filename: ''
+      filename: ':memory:'
     },
     migrations,
     seeds,

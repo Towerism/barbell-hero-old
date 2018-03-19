@@ -1,7 +1,7 @@
 import { test } from 'ava'
 import start from '../server/start'
 import { resolve } from 'path'
-import { migrate, seed, rollback, drop } from '../server/db'
+import { migrate, seed, rollback } from '../server/db'
 import Mutex from 'await-mutex'
 import request from './helpers/request'
 
@@ -16,7 +16,6 @@ export function harness (defineTests) {
   defineTests()
 
   test.afterEach.always('Rollback database', rollbackDatabase)
-  test.after.always('Kill database', drop)
 }
 
 function initRequest (t) {
