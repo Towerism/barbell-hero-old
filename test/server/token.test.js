@@ -4,7 +4,7 @@ import { decode } from 'jsonwebtoken'
 import { harness } from '../harness'
 
 harness(() => {
-  test('GET /token 401', async t => {
+  test('GET /api/token 401', async t => {
     const res = await t.context.api.get('/api/token', {
       username: 'user',
       password: 'password'

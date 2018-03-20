@@ -10,12 +10,35 @@ let unlock
 
 export function harness (defineTests) {
   test.serial.before('Init server', startServer)
-  test.serial.before('Init request', initRequest)
   test.beforeEach('Init database', initDatabase)
+  test.serial.beforeEach('Init request', initRequest)
 
   defineTests()
 
   test.afterEach.always('Rollback database', rollbackDatabase)
+}
+
+export function authenticated (defineTests) {
+  harness(() => {
+    test.serial.beforeEach('Authenticate', async t => {
+      let res = await t.context.api.post('/api/users', {
+        username: 'myuser',
+        password: 'mypassword'
+      })
+      console.assert(res.status, 200)
+
+      res = await t.context.api.get('/api/token', {
+        username: 'myuser',
+        password: 'mypassword'
+      })
+
+      console.assert(res.status, 200)
+      t.context.auth = res.body
+    })
+    test.serial.beforeEach('Init request with auth token', initRequest)
+
+    defineTests()
+  })
 }
 
 function initRequest (t) {

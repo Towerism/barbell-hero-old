@@ -1,9 +1,9 @@
 import test from 'ava'
-import { harness } from '../harness'
+import { authenticated } from '../harness'
 
-harness(() => {
+authenticated(() => {
   test('Route / exits without an error', async t => {
-    const res = await t.context.api.get('/')
+    const res = await t.context.api.authenticated.get('/')
     t.is(res.status, 200)
   })
 })
