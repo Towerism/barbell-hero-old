@@ -1,4 +1,5 @@
 import Router from 'koa-rest-router'
+import { decode } from 'jsonwebtoken'
 
 export default function middleware (app) {
   let api = Router({ prefix: 'api' })
@@ -12,6 +13,12 @@ export default function middleware (app) {
       ctx.body = await user.save()
     }
   })
-
+  api.addRoute('GET', 'authenticated', (ctx, next) => {
+    let authHeader = ctx.request.headers['authorization']
+    let tokenMatch = authHeader.match(/Bearer (.*)/)
+    let token = tokenMatch[1]
+    let user = decode(token)
+    ctx.body = user
+  })
   app.use(api.middleware())
 }

@@ -22,6 +22,16 @@ module.exports = {
   ** Modules
   */
   modules: [
+    '@nuxtjs/axios',
+    '@nuxtjs/auth',
     '@nuxtjs/pwa'
-  ]
+  ],
+
+  auth: {
+    endpoints: {
+      logout: false,
+      login: { url: '/api/token', method: 'get', propertyName: 'token' },
+      user: { url: '/api/users', method: 'get' }
+    }
+  }
 }

@@ -1,4 +1,5 @@
 import { test } from 'ava'
+import { decode } from 'jsonwebtoken'
 import start from '../server/start'
 import { resolve } from 'path'
 import { migrate, seed, rollback } from '../server/db'
@@ -34,6 +35,7 @@ export function authenticated (defineTests) {
 
       console.assert(res.status, 200)
       t.context.auth = res.body
+      t.context.auth.id = decode(res.body.token).id
     })
     test.serial.beforeEach('Init request with auth token', initRequest)
 
