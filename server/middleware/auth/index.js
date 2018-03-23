@@ -2,6 +2,8 @@ import jwt from 'koa-jwt'
 import Router from 'koa-rest-router'
 import { sign } from 'jsonwebtoken'
 
+import unauthenticated from './unauthenticated'
+
 export default function middleware (app) {
   let auth = Router({ prefix: 'api' })
 
@@ -24,5 +26,5 @@ export default function middleware (app) {
 
   app.use(auth.middleware())
 
-  app.use(jwt({ secret: 'secret' }).unless({ path: [/^\/api\/users/, /^\/api\/token/] }))
+  app.use(jwt({ secret: 'secret' }).unless({ path: unauthenticated }))
 }
