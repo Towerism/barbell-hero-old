@@ -17,7 +17,6 @@
     "@nuxtjs/pwa": "^2.0.8",
     "@nuxtjs/vuetify": "^0.4.1",
     "await-mutex": "^1.0.1",
-    "babel-core": "6",
     "bookshelf": "^0.12.1",
     "bookshelf-secure-password": "^3.0.1",
     "cross-env": "^5.1.4",
