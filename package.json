@@ -44,7 +44,7 @@
     "test:server": "ava",
     "db:migrate:make": "yarn knex migrate:make",
     "db:migrate:latest": "yarn knex migrate:latest",
-    "heroku-postbuild": "yarn build && db:migrate:latest"
+    "heroku-postbuild": "yarn build && yarn db:migrate:latest"
   },
   "devDependencies": {
     "ava": "^1.0.0-beta.3",
