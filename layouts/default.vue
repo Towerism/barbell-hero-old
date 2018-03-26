@@ -38,7 +38,7 @@
     v-toolbar(color="amber" app absolute clipped-left)
       v-toolbar-side-icon(@click.native="drawer = !drawer")
       span.title.ml-3.mr-5 Barbell&nbsp;
-      span.text Hero
+        span.text Hero
       v-text-field(
         solo-inverted
         flat
