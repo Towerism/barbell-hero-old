@@ -18,7 +18,7 @@ export default function middleware (app) {
     let tokenMatch = authHeader.match(/Bearer (.*)/)
     let token = tokenMatch[1]
     let user = decode(token)
-    ctx.body = user
+    ctx.body = { user }
   })
   app.use(api.middleware())
 }

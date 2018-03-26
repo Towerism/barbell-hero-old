@@ -25,3 +25,5 @@ static/manifest*.json
 static/sw.js
 static/workbox-sw*.js
 *.sqlite
+test/ui/pages/reports
+*.log

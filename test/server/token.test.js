@@ -1,22 +1,22 @@
 import { test } from 'ava'
 import { decode } from 'jsonwebtoken'
 
-import { harness } from '../harness'
+import { harness } from './harness'
 
 harness(() => {
-  test('GET /api/token 401', async t => {
-    const res = await t.context.api.get('/api/token', {
+  test('POST /api/token 401', async t => {
+    const res = await t.context.api.post('/api/token', {
       username: 'user',
       password: 'password'
     })
     t.is(res.status, 401)
   })
-  test('GET /api/token 200', async t => {
+  test('POST /api/token 200', async t => {
     await t.context.api.post('/api/users', {
       username: 'myuser',
       password: 'mypassword'
     })
-    const res = await t.context.api.get('/api/token', {
+    const res = await t.context.api.post('/api/token', {
       username: 'myuser',
       password: 'mypassword'
     })

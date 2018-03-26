@@ -1,6 +1,6 @@
 import { test } from 'ava'
 
-import { authenticated } from '../harness'
+import { authenticated } from './harness'
 
 authenticated(() => {
   test('GET api/users/1', async t => {

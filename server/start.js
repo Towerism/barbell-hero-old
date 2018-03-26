@@ -5,25 +5,8 @@ import middleware from './middleware'
 
 export default async function start (_host, _port, options) {
   const app = new Koa()
-  const host = _host || process.env.HOST || '127.0.0.1'
-  const port = _port != null ? _port : process.env.PORT || 3000
-
-  options = Object.assign({
-    nuxtBuild: false,
-    rootDir: resolve(__dirname, '..')
-  }, options)
-
-  let config = Object.assign(require('../nuxt.config.js'), {
-    dev: !(app.env === 'production'),
-    rootDir: options.rootDir
-  })
-
-  const nuxt = new Nuxt(config)
-
-  if (config.dev || options.nuxtBuild) {
-    const builder = new Builder(nuxt)
-    await builder.build()
-  }
+  let host = _host || process.env.HOST || '127.0.0.1'
+  let port = _port != null ? _port : process.env.PORT || 3000
 
   middleware(app)
 
@@ -42,9 +25,36 @@ export default async function start (_host, _port, options) {
     })
   })
 
-  let server = app.listen(port, host, () => {
-    process.env.PORT = server.address().port
-    console.log(`Server listening on ${host}:${process.env.PORT}`)
+  let server = await listen(app, port, host)
+  port = server.address().port
+  console.log(`Server listening on ${host}:${port}`)
+
+  options = Object.assign({
+    nuxtBuild: false,
+    rootDir: resolve(__dirname, '..')
+  }, options)
+
+  let config = Object.assign(require('../nuxt.config.js'), {
+    dev: !(app.env === 'production'),
+    debug: !(app.env === 'production'),
+    rootDir: options.rootDir,
+    axios: {
+      port
+    }
   })
-  return { nuxt, server }
+
+  const nuxt = new Nuxt(config)
+
+  if (config.dev || options.nuxtBuild) {
+    const builder = new Builder(nuxt)
+    await builder.build()
+  }
+
+  return { nuxt, server, port }
+}
+
+async function listen (app, port, host) {
+  return new Promise((resolve, reject) => {
+    let server = app.listen(port, host, () => resolve(server))
+  })
 }

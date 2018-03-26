@@ -1,53 +1,90 @@
-<template>
-  <div>
-    <nuxt/>
-  </div>
+<template lang="pug">
+  v-app(id="inspire")
+    v-navigation-drawer.grey.lighten-4(
+      fixed
+      clipped
+      app
+      v-model="drawer"
+    )
+      v-list.grey.lighten-4(
+        dense
+      )
+        template(v-for="(item, i) in items")
+          v-layout(
+            row
+            v-if="item.heading"
+            align-center
+            :key="i"
+          )
+            v-flex(xs6)
+              v-subheader(v-if="item.heading") {{ item.heading }}
+            v-flex.text-xs-right(xs6)
+              v-btn(small flat) edit
+          v-divider.my-3(
+            dark
+            v-else-if="item.divider"
+            :key="i"
+          )
+          v-list-tile(
+            :key="i"
+            v-else
+            :id="menuItemId(item.text)"
+            @click="item.onClick"
+          )
+            v-list-tile-action
+              v-icon {{ item.icon }}
+            v-list-tile-content
+              v-list-tile-title.grey--text {{ item.text }}
+    v-toolbar(color="amber" app absolute clipped-left)
+      v-toolbar-side-icon(@click.native="drawer = !drawer")
+      span.title.ml-3.mr-5 Barbell&nbsp;
+      span.text Hero
+      v-text-field(
+        solo-inverted
+        flat
+        label="Search"
+        prepend-icon="search"
+      )
+      v-spacer
+    v-content
+      v-container.grey.lighten-4(fluid)
+        nuxt
 </template>
 
+<script>
+  import _ from 'lodash'
+  export default {
+    data () {
+      return {
+        drawer: null,
+        items: [
+          { icon: 'perm_identity', text: 'Logout', onClick: this.logout }
+        ]
+      }
+    },
+    props: {
+      source: String
+    },
+    methods: {
+      logout () {
+        this.$auth.logout()
+        this.$router.push('login')
+      },
+      menuItemId (menuItemText) {
+        return `${_.camelCase(menuItemText)}MenuItem`
+      }
+    }
+  }
+</script>
+
 <style>
-html
-{
-  font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  font-size: 16px;
-  word-spacing: 1px;
-  -ms-text-size-adjust: 100%;
-  -webkit-text-size-adjust: 100%;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
-  box-sizing: border-box;
-}
-*, *:before, *:after
-{
-  box-sizing: border-box;
-  margin: 0;
-}
-.button--green
-{
-  display: inline-block;
-  border-radius: 4px;
-  border: 1px solid #3b8070;
-  color: #3b8070;
-  text-decoration: none;
-  padding: 10px 30px;
-}
-.button--green:hover
-{
-  color: #fff;
-  background-color: #3b8070;
-}
-.button--grey
-{
-  display: inline-block;
-  border-radius: 4px;
-  border: 1px solid #35495e;
-  color: #35495e;
-  text-decoration: none;
-  padding: 10px 30px;
-  margin-left: 15px;
-}
-.button--grey:hover
-{
-  color: #fff;
-  background-color: #35495e;
-}
+  #keep main .container {
+    height: 660px;
+  }
+  .navigation-drawer__border {
+    display: none;
+  }
+  .text {
+    font-weight: 400;
+  }
 </style>

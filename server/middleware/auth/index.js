@@ -7,7 +7,7 @@ import unauthenticated from './unauthenticated'
 export default function middleware (app) {
   let auth = Router({ prefix: 'api' })
 
-  auth.addRoute('GET', 'token', async (ctx, next) => {
+  auth.addRoute('POST', 'token', async (ctx, next) => {
     let user = await ctx.state.User.where({ username: ctx.request.body.username }).fetch()
     try {
       user = await user.authenticate(ctx.request.body.password)

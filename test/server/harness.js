@@ -1,13 +1,11 @@
 import { test } from 'ava'
 import { decode } from 'jsonwebtoken'
-import start from '../server/start'
 import { resolve } from 'path'
-import { migrate, seed, rollback } from '../server/db'
-import Mutex from 'await-mutex'
+
 import request from './helpers/request'
 
-let mutex = new Mutex()
-let unlock
+import { initDatabase, rollbackDatabase } from '../common'
+import start from '../../server/start'
 
 export function harness (defineTests) {
   test.serial.before('Init server', startServer)
@@ -28,7 +26,7 @@ export function authenticated (defineTests) {
       })
       console.assert(res.status, 200)
 
-      res = await t.context.api.get('/api/token', {
+      res = await t.context.api.post('/api/token', {
         username: 'myuser',
         password: 'mypassword'
       })
@@ -49,17 +47,9 @@ function initRequest (t) {
 
 async function startServer (t) {
   t.context = await start('localhost', 0, {
-    rootDir: resolve(__dirname, '..')
+    rootDir: resolve(__dirname, '../..')
   })
-}
-
-async function initDatabase (t) {
-  unlock = await mutex.lock()
-  await migrate()
-  await seed()
-}
-
-async function rollbackDatabase (t) {
-  await rollback()
-  unlock()
+  let port = t.context.port
+  t.context.serverUrl = `http://localhost:${port}`
+  console.log('serverUrl: ', t.context.serverUrl)
 }
