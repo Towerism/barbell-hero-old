@@ -1,5 +1,5 @@
 export default [
-  /^\/api\/users/,
+  /^\/api\/users\/authenticated/,
   /^\/api\/token/,
   /^\//
 ]

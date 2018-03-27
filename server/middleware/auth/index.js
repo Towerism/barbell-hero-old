@@ -26,5 +26,6 @@ export default function middleware (app) {
 
   app.use(auth.middleware())
 
-  app.use(jwt({ secret: 'secret' }).unless({ path: unauthenticated }))
+  const secret = process.env.AUTH_SECRET || 'secret'
+  app.use(jwt({ secret }).unless({ path: unauthenticated }))
 }
