@@ -1,13 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
+using BarbellHero.DataAccess;
+using BarbellHero.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SpaServices.Webpack;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 
 namespace BarbellHero
 {
@@ -29,6 +36,37 @@ namespace BarbellHero
     public void ConfigureServices(IServiceCollection services)
     {
       // Add framework services.
+      services.AddDbContext<BarbellHeroDbContext>(options => options.UseInMemoryDatabase("BarbellHeroDb"));
+      services.AddIdentity<ApplicationUser, IdentityRole>()
+        .AddEntityFrameworkStores<BarbellHeroDbContext>();
+
+      var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:SecretKey"]));
+      var tokenValidationParameters = new TokenValidationParameters
+      {
+        ValidateIssuer = true,
+        ValidIssuer = Configuration["Jwt:Issuer"],
+
+        ValidateAudience = true,
+        ValidAudience = Configuration["Jwt:Audience"],
+
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = signingKey,
+
+        RequireExpirationTime = false,
+        ValidateLifetime = true,
+        ClockSkew = TimeSpan.Zero
+      };
+
+      services.AddAuthentication(options =>
+      {
+        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+      }).AddJwtBearer(options =>
+      {
+        options.TokenValidationParameters = tokenValidationParameters;
+        options.SaveToken = true;
+      });
+
       services.AddMvc();
     }
 
@@ -53,11 +91,12 @@ namespace BarbellHero
 
       app.UseStaticFiles();
 
+      app.UseAuthentication();
       app.UseMvc(routes =>
       {
         routes.MapRoute(
-                  name: "default",
-                  template: "{controller=Home}/{action=Index}/{id?}");
+                  name: "api",
+                  template: "api/{controller=Home}/{action=Index}/{id?}");
 
         routes.MapSpaFallbackRoute(
                   name: "spa-fallback",
