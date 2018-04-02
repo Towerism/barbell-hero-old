@@ -15,21 +15,12 @@
 
 <script>
 import Vue from 'vue'
-import CounterExample from './counter-example'
-import FetchData from './fetch-data'
-import HomePage from './home-page'
-import NavMenu from './nav-menu'
-
-Vue.component('counter-example', CounterExample);
-Vue.component('fetch-data', FetchData);
-Vue.component('home-page', HomePage);
-Vue.component('nav-menu', NavMenu);
+import NavMenu from './components/NavMenu'
 
 export default {
-    data() {
-        return {
-        }
-    }
+  components: {
+    NavMenu
+  }
 }
 </script>
 
