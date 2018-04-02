@@ -2,7 +2,7 @@ language: generic
 services:
     - docker
 script:
-    - docker login -u "$HEROKU_USER" -p "$HEROKU_PASSWORD" registry.heroku.com
+    - docker login -u "$HEROKU_USER" -p "$HEROKU_TOKEN" registry.heroku.com
     - docker build -t barbell-hero .
     - docker push registry.heroku.com/barbell-hero/web
 env:
