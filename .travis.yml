@@ -1,12 +1,11 @@
-language: csharp
-mono: none
-dotnet: 2.1.103
-addons:
-    chrome: stable
-cache: yarn
-before_install:
-    - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.5.1
-    - export PATH="$HOME/.yarn/bin:$PATH"
+language: generic
+services:
+    - docker
 script:
-    - dotnet restore
-    - dotnet build
+    - docker login -u "$HEROKU_USER" -p "$HEROKU_PASSWORD" registry.heroku.com
+    - docker build -t barbell-hero .
+    - docker push registry.heroku.com/barbell-hero/web
+env:
+  global:
+  - secure: Ua7CYX4IG2kbzldMJOUk6+BicI7/DaZPtyfrBPjn3e/elDJEL9wvOXlbLmAfP84uoCjXtcbfAjVXQDfZ7I1yHtoWbuQjASSzDLv+vNNca+nv1U5WVQ0Do4FtfgFmnZkT5ORvSvMLZOqii2J3if/4A6bLtPbVExgxVUZ5cw3mm3u6hylrHhSezsqqousfienHiwFTJgpJevidwBzIh4z7sGUA+QNRIo/1/dXrq7HuhfOfHmUd8GczEVRstoDFMCdPD2X3nx8+nou/BXEbcj1I1NAGWgb7id+DQnnJRMVof6V4mkEHV0xUBf3RhyGu/WkpQv64JDyTRFmwchNXhYxCVUn94XA17Wl/k1IaM4mW++O43FZo5fg2VXlc0BsxjSb5v7Pvjx3MrizdSPE/4TxzxXnMIsKhpBev99u+xzbK7wQ1fDN45YIP3GPLVYHuVmwDVkTEYD7jggy1fKWMY7PW0ELdqfW3LsoJXz/oTBL3+1A7RBoXa9ZB21wsiFHcVUoyH1bqhniq8DiKt1fqNg26bR5hTdr90AqXBq3p2EXfzPtIbnh3Mj5FUHy5prBjZME+ApiakPH5fuvhHReQStRQPY6dkrAZulWr7Obk8eGs5LHu5/s0FDf1aUrUKdl/4sDRxQknP8VF1ePEaKPj2cQ/Ht6RlaDnwTvHzwnN6SrgbmU=
+  - secure: WBNUESGAc3eUEhYQ78to7PoA25d004UE0b6GzTYpHDoJZWwR8oQQ7sizI/dQNDhBCDhWzkbJ7+R4yolPFUSj5vAypvoVQFYEyIuT9xnompnQEwgzsho04Wdr189GQTM5vns9wLtLaC+2n7enVZOWQ0XMcx7ptKu2cajDAM7mwb+Ix+rtyKHlHBQj1mPcUgutCf9NhjqLk1h2Hd9O+rRLFvuHfhGjzQCIz5UsfO8DFIS7tMc1NDScchOZ8a61tZ2BCCE4bcLGym4qk7iFpX+MOaxUQj6OQBqda6tcPgJWbB/oHg17bVZcb9cpEU9H+WAA5O+gr7bklWWWqz8qB/tE3NqnoJVLTgL0oCMtwaeTqLK3NjH0zz+WQg9XaQGmb3qB4orjUhzi7dJThPvhaAmO6OO9AY5HX6FT+3bF6eBn7VfhCiYPdLdbP06pPy4zewPPI6qFkaiZgnh0Y/1FgtczMFEyfHMRDVjiybhZXEVk6/xa69fmm/H/1rpi7xCePHNV4gCCZxgE1z8+UPkvdOvF0aQl3QkEnR1QMYyQYId1hgKEIdenJLfTmvMwuVgWsCOjqNfsYT8KmFbsDLMiSYPGx3pMkYp1+KnYBod8bCbKRCmVjl1SzagjFoqEt8WJBBAYp/77bhgHW5jhWHj8Np8RXLEAH4PwmHVSfzKu/DhsDio=
