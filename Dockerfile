@@ -3,6 +3,7 @@ WORKDIR /source
 
 COPY . .
 RUN dotnet restore
+RUN cd BarbellHero && npm install
 RUN dotnet test BarbellHero.Tests
 RUN dotnet publish --output /app/ --configuration Release
 
