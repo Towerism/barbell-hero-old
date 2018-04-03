@@ -1,11 +1,14 @@
 language: generic
 services:
-    - docker
+  - docker
 script:
-    - docker login -u "$HEROKU_USER" -p "$HEROKU_TOKEN" registry.heroku.com
-    - docker build -t barbell-hero .
-    - docker tag barbell-hero registry.heroku.com/barbell-hero/web
-    - docker push registry.heroku.com/barbell-hero/web
+  - docker login -u "$HEROKU_USER" -p "$HEROKU_TOKEN" registry.heroku.com
+  - docker build -t barbell-hero .
+deploy:
+  provider: script
+  script: ci/deploy.sh
+  on:
+    branch: master
 env:
   global:
   - secure: Ua7CYX4IG2kbzldMJOUk6+BicI7/DaZPtyfrBPjn3e/elDJEL9wvOXlbLmAfP84uoCjXtcbfAjVXQDfZ7I1yHtoWbuQjASSzDLv+vNNca+nv1U5WVQ0Do4FtfgFmnZkT5ORvSvMLZOqii2J3if/4A6bLtPbVExgxVUZ5cw3mm3u6hylrHhSezsqqousfienHiwFTJgpJevidwBzIh4z7sGUA+QNRIo/1/dXrq7HuhfOfHmUd8GczEVRstoDFMCdPD2X3nx8+nou/BXEbcj1I1NAGWgb7id+DQnnJRMVof6V4mkEHV0xUBf3RhyGu/WkpQv64JDyTRFmwchNXhYxCVUn94XA17Wl/k1IaM4mW++O43FZo5fg2VXlc0BsxjSb5v7Pvjx3MrizdSPE/4TxzxXnMIsKhpBev99u+xzbK7wQ1fDN45YIP3GPLVYHuVmwDVkTEYD7jggy1fKWMY7PW0ELdqfW3LsoJXz/oTBL3+1A7RBoXa9ZB21wsiFHcVUoyH1bqhniq8DiKt1fqNg26bR5hTdr90AqXBq3p2EXfzPtIbnh3Mj5FUHy5prBjZME+ApiakPH5fuvhHReQStRQPY6dkrAZulWr7Obk8eGs5LHu5/s0FDf1aUrUKdl/4sDRxQknP8VF1ePEaKPj2cQ/Ht6RlaDnwTvHzwnN6SrgbmU=
