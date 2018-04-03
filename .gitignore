@@ -2,7 +2,7 @@
 node_modules/
 npm-debug.log
 
-/Properties/launchSettings.json
+/BarbellHero/Properties/launchSettings.json
 
 package-lock.json
 
@@ -34,10 +34,10 @@ Obj/
 
 # Visual Studio 2015 cache/options directory
 .vs/
-/wwwroot/dist/**
+/BarbellHero/wwwroot/dist/**
 
 # Workaround for https://github.com/aspnet/JavaScriptServices/issues/235
-!/wwwroot/dist/_placeholder.txt
+!/BarbellHero/wwwroot/dist/_placeholder.txt
 
 /yarn.lock
 
