@@ -19,7 +19,7 @@ namespace BarbellHero.Tests
     private readonly HttpClient client;
 
     public AccountControllerTests() {
-      var projectDirectory = Path.GetFullPath(@"..\..\..\..\BarbellHero");
+      var projectDirectory = Path.GetFullPath(@"../../../../BarbellHero");
       server = new TestServer(new WebHostBuilder()
         .UseEnvironment("Development")
         .UseContentRoot(projectDirectory)

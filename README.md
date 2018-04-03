@@ -12,7 +12,7 @@ $ cd BarbellHero && npm install # Or yarn install
 $ dotnet test BarbellHero.Tests
 
 # serve with hot reload at localhost:5000
-$ npm --cwd=BarbellHero run dev
+$ cd BarbellHero && npm run dev
 
 # build for production and launch server
 $ docker build -t barbell-hero .

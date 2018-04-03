@@ -3,6 +3,7 @@ WORKDIR /source
 
 COPY . .
 RUN dotnet restore
+RUN dotnet test BarbellHero.Tests
 RUN dotnet publish --output /app/ --configuration Release
 
 FROM microsoft/aspnetcore
