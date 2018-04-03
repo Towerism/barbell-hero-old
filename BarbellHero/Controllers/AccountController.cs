@@ -73,18 +73,6 @@ namespace PGCRTX.Controllers
         signingCredentials: creds);
 
       return new JwtSecurityTokenHandler().WriteToken(token);
-     }
-
-  object ToUnixEpochDate(object issuedAt)
-  {
-    throw new NotImplementedException();
-  }
-
-  [Authorize]
-    public async Task<IActionResult> LogOff()
-    {
-      log.LogInformation(2, "User logged out.");
-      return new OkResult();
     }
 
     [HttpPost]
