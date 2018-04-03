@@ -6,10 +6,13 @@
 
 ``` bash
 # install dependencies
-$ npm install # Or yarn install
+$ cd BarbellHero && npm install # Or yarn install
+
+# run tests
+$ dotnet test BarbellHero.Tests
 
 # serve with hot reload at localhost:5000
-$ npm run dev
+$ npm --cwd=BarbellHero run dev
 
 # build for production and launch server
 $ docker build -t barbell-hero .
