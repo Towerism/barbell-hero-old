@@ -37,7 +37,7 @@ namespace PGCRTX.Controllers
     }
 
     [HttpPost]
-    public async Task<IActionResult> Login(LoginBindingModel model)
+    public async Task<IActionResult> Login([FromBody] LoginBindingModel model)
     {
       var result = await signInManager.PasswordSignInAsync(model.Email,
           model.Password, isPersistent: false, lockoutOnFailure: false);
@@ -76,7 +76,7 @@ namespace PGCRTX.Controllers
     }
 
     [HttpPost]
-    public async Task<IActionResult> Register(RegisterBindingModel model, string returnUrl = null)
+    public async Task<IActionResult> Register([FromBody] RegisterBindingModel model)
     {
       var user = new ApplicationUser();
       user.InjectFrom(model);
